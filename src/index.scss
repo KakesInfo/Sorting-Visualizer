@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap");
+
+:root {
+	--blue: #0099ff;
+	--yellow: #ffd700;
+	--background: #f2f3f9;
+
+	--shadow: 0.25rem 0.25rem 1.75rem 0 rgba(146, 125, 250, 0.16);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+
+	font-size: 1rem;
+	font-family: "IBM Plex Sans", sans-serif;
+
+	overflow-x: hidden;
+	background: var(--background);
+}
+
+.visualizer-navigation {
+	position: fixed;
+	height: 100px;
+
+	display: flex;
+	flex-direction: row;
+
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	background: #fff;
+	box-shadow: var(--shadow);
+}
+
+.visualizer-navigation .left,
+.visualizer-navigation .right {
+	flex: 0 0 50%;
+
+	line-height: 100px;
+	padding: 0 30px;
+}
+
+.visualizer-navigation .right {
+	text-align: right;
+}
+
+.visualizer-navigation__random {
+	height: 60px;
+	width: 60px;
+
+	outline: none;
+	border: none;
+	cursor: pointer;
+	line-height: 30px;
+
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: bold;
+	border-radius: 60px;
+	background: var(--blue);
+	transition: transform 0.3s;
+}
+
+.visualizer-navigation__random:hover {
+	transform: scale(1.05);
+}
+
+.visualizer-navigation__count {
+	margin: 0 30px;
+
+	-webkit-appearance: slider-horizontal;
+	cursor: grab;
+	outline: none;
+}
+
+.visualizer-navigation__count::selection {
+	color: red;
+}
+
+.visualizer-navigation__button {
+	margin-left: 15px;
+	padding: 0 16px;
+
+	border: none;
+	outline: none;
+	cursor: pointer;
+
+	color: #fff;
+	font-size: 1rem;
+	line-height: 30px;
+	border-radius: 8px;
+	background: var(--blue);
+	transition: transform 0.3s;
+}
+
+.visualizer-navigation__button:hover {
+	transform: scale(1.05);
+}
+
+.visualizer-container {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	bottom: 0;
+
+	padding-top: 10%;
+
+	border-radius: 14px;
+	box-shadow: var(--shadow);
+}
+
+.visualizer-item {
+	flex: 1 0 auto;
+
+	border-radius: 20px 20px 0 0;
+	background: var(--blue);
+}
+
+.visualizer-item.selected {
+	background: var(--yellow);
+}

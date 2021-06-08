@@ -35,10 +35,12 @@ export default class Visualizer extends React.Component {
   }
 
   handleRandom (event) {
+	if (this.state.executing) return;
     this.setState({ items: this.generateItems(this.state.itemsCount) })
   }
 
   handleRange(event) {
+	if (this.state.executing) return;
     let value = event.currentTarget.value
 
     this.setState({
@@ -48,7 +50,10 @@ export default class Visualizer extends React.Component {
   }
 
   handleSort (event, algorithm) {
-    let items = this.state.items
+	if (this.state.executing) return;
+	this.setState({executing: true});
+
+	let items = this.state.items
 
     let sorter = null
     switch (algorithm) {
@@ -57,20 +62,21 @@ export default class Visualizer extends React.Component {
         break;
       case "insertion":
         sorter = new InsertionSort()
-        break; 
+        break;
       case "bubble":
         sorter = new BubbleSort()
-        break;       
+        break;
       default:
         throw new Error("Aucun des tris disponibles ne correpondent...")
     }
     sorter.execute(items)
 
-    let stepIndex = 0
-    while(stepIndex < sorter.steps.length) {
-      let step = sorter.steps[stepIndex]
+	let stepIndex = 0;
+	const id = setInterval(() => {
+		if (stepIndex >= sorter.steps.length)
+			return clearInterval(id);
+		      let step = sorter.steps[stepIndex]
 
-      setTimeout(function () {
         items.forEach(item => item.className = "visualizer-item")
         if (step.select !== false && step.select !== undefined) {
           let selects = []
@@ -91,9 +97,10 @@ export default class Visualizer extends React.Component {
         }
 
         this.setState({ items })
-      }.bind(this), 15 * stepIndex)
-      stepIndex += 1
-    }
+      	stepIndex += 1
+	}, 1);
+
+	this.setState({executing: false});
   }
 
   render () {
