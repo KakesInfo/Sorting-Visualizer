@@ -54,7 +54,6 @@ export default class Visualizer extends React.Component {
 	this.setState({executing: true});
 
 	let items = this.state.items
-
     let sorter = null
     switch (algorithm) {
       case "selection":
@@ -75,8 +74,8 @@ export default class Visualizer extends React.Component {
 	const id = setInterval(() => {
 		if (stepIndex >= sorter.steps.length)
 			return clearInterval(id);
-		      let step = sorter.steps[stepIndex]
 
+		let step = sorter.steps[stepIndex]
         items.forEach(item => item.className = "visualizer-item")
         if (step.select !== false && step.select !== undefined) {
           let selects = []
@@ -95,10 +94,13 @@ export default class Visualizer extends React.Component {
           items[step.swap.left] = items[step.swap.right]
           items[step.swap.right] = tmp
         }
+		else if (step.insert) {
+			items[step.insert.index].size = step.insert.value;
+		}
 
         this.setState({ items })
       	stepIndex += 1
-	}, 1);
+	}, 135);
 
 	this.setState({executing: false});
   }
@@ -127,11 +129,11 @@ export default class Visualizer extends React.Component {
             type="button"
             onClick={(e) => this.handleSort(e, "selection")}
           >Tri par sélection</button>
-          {/* <button
+          <button
             className="visualizer-navigation__button"
             type="button"
             onClick={(e) => this.handleSort(e, "insertion")}
-          >Tri par insertion</button> */}
+          >Tri par insertion</button>
           <button
             className="visualizer-navigation__button"
             type="button"
